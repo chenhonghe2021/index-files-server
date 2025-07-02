@@ -11,6 +11,7 @@ FILES=(
   "fix-permissions.sh"
   "nginx.conf"
   "start.sh"
+  "index.html"
 )
 
 echo "🚀 正在从您的仓库下载文件..."
