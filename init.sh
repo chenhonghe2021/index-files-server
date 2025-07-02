@@ -2,7 +2,7 @@
 set -e
 
 # 您GitHub仓库的raw文件地址
-BASE_URL="https://raw.githubusercontent.com/<您的用户名>/<您的仓库>/<分支>"
+BASE_URL="https://raw.githubusercontent.com/chenhonghe2021/index-files-server/<分支>"
 
 FILES=(
   "docker-compose.yml"
