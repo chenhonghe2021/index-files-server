@@ -1,8 +1,9 @@
 #!/bin/sh
-
 set -e
 
-# 所有需要下载的文件及其 URL
+# 您GitHub仓库的raw文件地址
+BASE_URL="https://raw.githubusercontent.com/<您的用户名>/<您的仓库>/<分支>"
+
 FILES=(
   "docker-compose.yml"
   "Dockerfile"
@@ -10,28 +11,18 @@ FILES=(
   "fix-permissions.sh"
   "nginx.conf"
   "start.sh"
+  "index.html"
 )
 
-BASE_URL="https://getindex.netlify.app/nginx"
+echo "🚀 正在从您的仓库下载文件..."
 
-# 下载所有文件
 for file in "${FILES[@]}"; do
-  echo "正在下载 $file ..."
-  wget -q --show-progress "${BASE_URL}/${file}" -O "$file"
+  echo "↓ 下载 $file"
+  curl -fsSL "${BASE_URL}/${file}" -o "$file"
 done
 
-# 检查所有文件是否存在且非空
-for file in "${FILES[@]}"; do
-  if [ ! -s "$file" ]; then
-    echo "❌ 文件 $file 下载失败或为空！"
-    exit 1
-  fi
-done
+echo "✅ 所有文件下载完成"
+chmod +x start.sh entrypoint.sh fix-permissions.sh
 
-# 如果全部成功，执行你的逻辑
-do_start() {
-  echo "✅ 所有文件下载成功，开始部署本地nginx文件服务器..."
-  sh start.sh
-}
-
-do_start
+echo "🐳 启动容器..."
+./start.sh
